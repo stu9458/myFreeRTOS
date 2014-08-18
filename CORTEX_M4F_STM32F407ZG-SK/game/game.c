@@ -9,6 +9,7 @@
 
 int8_t count=0;
 int8_t i=0;
+uint8_t str[16]=48;//The ascii-code's zero=48
 //Player1
 int16_t player1X = 10;
 int16_t player1Y = 10;
@@ -151,7 +152,15 @@ void GAME_Update()
 				count++;
 				if(count>=10)
 				  count=10;
-				}
+				str[2]++;
+				if(str[2]>=58){
+				if(count>=10)
+				if(count>=10)
+				   str[2]=0;str[1]++;
+				 }
+				if(str[1]>=58){
+				   str[1]=0;str[0]++;
+				{	
 				else
 					BallReset();
 			}
@@ -189,6 +198,9 @@ void GAME_Update()
 
 void GAME_Render()
 {
+	LCD_SetBack(LCD_COLOR_BLACK);
+	LCD_SetTextColor( LCD_COLOR_RED);	
+	LCD_DisplayStringLine(LCD_LINE_10,str);
 	LCD_SetTextColor( LCD_COLOR_WHITE );
 	LCD_DrawFullRect( player1X, player1Y, player1W, player1H );
 	LCD_DrawFullRect( player2X, player2Y, player2W, player2H );
