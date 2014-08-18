@@ -1,12 +1,3 @@
-/*
-The code modify from "game" branch.
-Add new ball when the ball touch the player2-block, that's more difficult than orginal.
-Modify the color.
-Let the player2 big than player1 like wall.
-Not to modify the move-method.
-The detail please chech my hackpad. (https://emp-learn.hackpad.com/2014Week3#Wee3-Lab4)
-2014/08/16 By Emp-CHEN.
-*/
 #include "game.h"
 #include "main.h"
 #include "FreeRTOS.h"
@@ -15,6 +6,7 @@ The detail please chech my hackpad. (https://emp-learn.hackpad.com/2014Week3#Wee
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 int8_t count=0;
 int8_t i=0;
 //Player1
@@ -48,8 +40,8 @@ void BallReset()
 	{
 		ballX[i] = ( LCD_PIXEL_WIDTH - 5 ) / 2;
 		ballY[i] = ( LCD_PIXEL_HEIGHT - 5 ) / 2;
-		ballVX[i] = -5;
-		ballVY[i] = -5;
+		ballVX[i] = -5+i;
+		ballVY[i] = -5+i;
 	}
    ballIsRun = 1;
 }
@@ -109,9 +101,9 @@ void GAME_Update()
 		else if( player2X + player2W >= LCD_PIXEL_WIDTH )
 			player2X = LCD_PIXEL_WIDTH - player2W;
 
-	//Ball
-	if( ballIsRun == 1 )
-	{
+		//Ball
+		if( ballIsRun == 1 )
+		{
 			LCD_SetTextColor( LCD_COLOR_BLACK );
 		for(i=0;i<count;i++)
 			LCD_DrawFullRect( ballX[i], ballY[i], ballSize, ballSize );
@@ -130,72 +122,69 @@ void GAME_Update()
 				ballVX[i] *= -1;
 			}
 		}
-	//PONG!
-	 	for(i=0;i<count;i++)
+		//PONG!
+		 for(i=0;i<count;i++)
 		{
-		ballY[i] += ballVY[i];
-		if( ballY[i] + ballSize >= player2Y )
-		{
-			if( ballX[i] + ballSize >= player2X && ballX[i] <= player2X + player2W ){
-				if( ballX[i] - ballSize <= player2Y + player2W/4 ){
-					ballVY[i] =-3;
-					ballVX[i] =-7;
-				}
-				else if( ballX[i] >= player2Y + player2W - player2W/4 ){
-					ballVY[i] =-3;
-					ballVX[i] = 7;
-				}
-				else if( ballX[i] + ballSize < player2Y + player2W/2 ){
-					ballVY[i] =-7;
-					ballVX[i] =-3;
-				}
-				else if( ballX[i] > player2Y + player2W/2 ){
-					ballVY[i] =-7;
-					ballVX[i] = 3;
-				}
-				else{
-					ballVY[i] =-9;
-					ballVX[i] = 0;
-				}
+			ballY[i] += ballVY[i];
+			if( ballY[i] + ballSize >= player2Y ){
+				if( ballX[i] + ballSize >= player2X && ballX[i] <= player2X + player2W ){
+					if( ballX[i] - ballSize <= player2Y + player2W/4 ){
+						ballVY[i] =-4;
+						ballVX[i] =-6;
+					}
+					else if( ballX[i] >= player2Y + player2W - player2W/4 ){
+						ballVY[i] =-4;
+						ballVX[i] = 6;
+					}
+					else if( ballX[i] + ballSize < player2Y + player2W/2 ){
+						ballVY[i] =-6;
+						ballVX[i] =-4;
+					}
+					else if( ballX[i] > player2Y + player2W/2 ){
+						ballVY[i] =-6;
+						ballVX[i] = 4;
+					}
+					else{
+						ballVY[i] =-10;
+						ballVX[i] = 0;
+					}
 				count++;
 				if(count>=10)
 				  count=10;
+				}
+				else
+					BallReset();
 			}
-			else
-				BallReset();
-			}
-			
 			//on player1's range.
-		if( ballY[i] <= player1Y + player1H ){
-					
-			if( ballX[i] + ballSize >= player1X && ballX[i] <= player1X + player1W ){
-				if( ballX[i] - ballSize <= player1Y + player1W/4 ){
-					ballVY[i] = 3;
-					ballVX[i]  =-7;
-				}
-				else if( ballX[i] >= player1Y + player1W - player1W/4 ){
-					ballVY[i] = 3;
-					ballVX[i] = 7;
-				}
-				else if( ballX[i] + ballSize < player1Y + player1W/2 ){
-					ballVY[i] = 7;
-					ballVX[i] =-3;
-				}
-				else if( ballX[i] > player1Y + player1W/2 ){
-					ballVY[i] = 7;
-					ballVX[i] = 3;
-				}
-				else{
-					ballVY[i] = 9;
-					ballVX[i] = 0;
+			if( ballY[i] <= player1Y + player1H ){
+					if( ballX[i] + ballSize >= player1X && ballX[i] <= player1X + player1W ){
+						if( ballX[i] - ballSize <= player1Y + player1W/4 ){
+							ballVY[i] = 4;
+							ballVX[i]  =-6;
+						}
+						else if( ballX[i] >= player1Y + player1W - player1W/4 ){
+							ballVY[i] = 4;
+							ballVX[i] = 6;
+						}
+						else if( ballX[i] + ballSize < player1Y + player1W/2 ){
+							ballVY[i] = 6;
+							ballVX[i] =-4;
+						}
+						else if( ballX[i] > player1Y + player1W/2 ){
+							ballVY[i] = 6;
+							ballVX[i] = 4;
+						}
+						else{
+							ballVY[i] = 10;
+							ballVX[i] = 0;
+						}
+					}
+					else
+						BallReset();
 				}
 			}
-			else
-				BallReset();
-			}
+		   }
 		}
-	}
-	}
 }
 
 void GAME_Render()
@@ -203,7 +192,7 @@ void GAME_Render()
 	LCD_SetTextColor( LCD_COLOR_WHITE );
 	LCD_DrawFullRect( player1X, player1Y, player1W, player1H );
 	LCD_DrawFullRect( player2X, player2Y, player2W, player2H );
-	LCD_SetTextColor( LCD_COLOR_RED );//Modify color from white to red.
+	LCD_SetTextColor( LCD_COLOR_RED );
 	for(i=0;i<count;i++)
 		LCD_DrawFullRect( ballX[i], ballY[i], ballSize, ballSize );
 	LCD_SetTextColor( LCD_COLOR_WHITE );
