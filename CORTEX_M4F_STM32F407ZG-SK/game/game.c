@@ -154,10 +154,10 @@ void GAME_Update()
 				  count=10;
 				  str[2]++;
 				if(str[2]>=58){
-				   str[2]=0;str[1]++;
+				   str[2]=48;str[1]++;
 				   }
 				if(str[1]>=58){
-				   str[1]=0;str[0]++;
+				   str[1]=48;str[0]++;
 				  }
 				}
 				else
