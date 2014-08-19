@@ -9,7 +9,7 @@
 
 int8_t count=0;
 int8_t i=0;
-uint8_t str[16]=48;//The ascii-code's zero=48
+uint8_t str[16]={48,48,48};//The ascii-code's zero=48
 //Player1
 int16_t player1X = 10;
 int16_t player1Y = 10;
@@ -152,15 +152,14 @@ void GAME_Update()
 				count++;
 				if(count>=10)
 				  count=10;
-				str[2]++;
+				  str[2]++;
 				if(str[2]>=58){
-				if(count>=10)
-				if(count>=10)
 				   str[2]=0;str[1]++;
-				 }
+				   }
 				if(str[1]>=58){
 				   str[1]=0;str[0]++;
-				{	
+				  }
+				}
 				else
 					BallReset();
 			}
