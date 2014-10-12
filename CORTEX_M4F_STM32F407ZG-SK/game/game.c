@@ -197,7 +197,7 @@ void GAME_Update()
 
 void GAME_Render()
 {
-	LCD_SetBack(LCD_COLOR_BLACK);
+	LCD_SetBackColor(LCD_COLOR_BLACK);
 	LCD_SetTextColor( LCD_COLOR_RED);	
 	LCD_DisplayStringLine(LCD_LINE_10,str);
 	LCD_SetTextColor( LCD_COLOR_WHITE );

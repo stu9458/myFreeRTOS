@@ -1,5 +1,5 @@
 PROJECT = usart1
-
+PWD=/home/emp-chen/git/myFreeRTOS
 EXECUTABLE = $(PROJECT).elf
 BIN_IMAGE = $(PROJECT).bin
 HEX_IMAGE = $(PROJECT).hex
@@ -47,7 +47,7 @@ CFLAGS += -DVECT_TAB_FLASH
 LDFLAGS += -T $(PWD)/CORTEX_M4F_STM32F407ZG-SK/stm32f429zi_flash.ld
 
 # STARTUP FILE
-OBJS += $(PWD)/CORTEX_M4F_STM32F407ZG-SK/startup_stm32f429_439xx.o
+OBJS+=$(PWD)/CORTEX_M4F_STM32F407ZG-SK/startup_stm32f429_439xx.o\
 
 # STM32F4xx_StdPeriph_Driver
 CFLAGS += -DUSE_STDPERIPH_DRIVER
@@ -55,8 +55,8 @@ CFLAGS += -D"assert_param(expr)=((void)0)"
 
 #My restart
 OBJS += \
-      $(PWD)/CORTEX_M4F_STM32F407ZG-SK/main.o \
-      $(PWD)/CORTEX_M4F_STM32F407ZG-SK/startup/system_stm32f4xx.o \
+      $(PWD)/CORTEX_M4F_STM32F407ZG-SK/main.o\
+      $(PWD)/CORTEX_M4F_STM32F407ZG-SK/startup/system_stm32f4xx.o\
       #$(PWD)/CORTEX_M4F_STM32F407ZG-SK/stm32f4xx_it.o \
 
 OBJS += \
